@@ -1,0 +1,14 @@
+﻿body {
+}
+
+span {
+    margin-right: 10px;
+}
+
+span.leftPadding {
+    margin-left: 10px;
+}
+
+canvas{
+    cursor: pointer;
+}
