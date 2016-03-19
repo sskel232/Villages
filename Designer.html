@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Content/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="Content/bootstrap-slider/bootstrap-slider.css" rel="stylesheet" />
+    <link href="Content/site.css" rel="stylesheet" />
+    <style>
+        #zoomSlider .slider-selection {
+            background: #BABABA;
+        }
+    </style>
+
+    <script src="Scripts/jquery-1.9.0.js"></script>
+    <script src="Scripts/Bootstrap/bootstrap.js"></script>
+    <script src="Scripts/Bootstrap/bootstrap-slider.js"></script>
+    <script src="Scripts/Angular/angular.js"></script>
+    <script src="Scripts/Angular/angular-route.js"></script>
+    <script src="Scripts/Angular/angular-animate.js"></script>
+    <script src="Scripts/Design/World/vectorLogic.js"></script>
+    <script src="Scripts/Design/World/designerSurface.js"></script>
+    <script src="Scripts/Design/World/canvas.js"></script>
+    <script src="Scripts/Design/World/scrollBar.js"></script>
+    <script src="Scripts/Design/designerApp.js"></script>
+    <script src="Scripts/Design/designerFactory.js"></script>
+    <script src="Scripts/Design/designerController.js"></script>
+    <script src="Scripts/Design/designerRouter.js"></script>
+    <!--<script type="text/javascript">
+        $(document).ready(function () {
+            $('#zoomSlider').slider({
+                formatter: function (value) {
+                    return 'Current value: ' + value;
+                }
+            });
+        })
+    </script>-->
+</head>
+<body data-ng-app="designerApp">
+    <div data-ng-controller="designerController">
+        <input type="radio" name="landType" value="plains" ng-model="landType" />
+        <span>Plains</span>
+        <input type="radio" name="landType" value="desert" ng-model="landType" />
+        <span>Desert</span>
+        <input type="radio" name="landType" value="forest" ng-model="landType" />
+        <span>Forest</span>
+        <input type="radio" name="landType" value="mountains" ng-model="landType" />
+        <span>Mountains</span>
+        <input type="radio" name="landType" value="water" ng-model="landType" />
+        <span>Water</span>
+        <span>Zoom:</span>
+        <div slider data-sliderType="zoom" data-slider-min="100" data-slider-max="1000" data-slider-step="1" data-slider-value="0"></div>
+        <input type="button" value="Redraw" ng-click="redrawClick()" />
+        <input type="button" value="Undo" ng-click="undoClick()" accesskey="z" />
+        <span>click: {{clickloc}}</span>
+        <span>hover: {{hoverloc}}</span>
+        <canvas ng-click="canvasClick($event)" ng-mousedown="canvasMouseDown($event)" ng-mouseup="canvasMouseUp($event)" ng-mousemove="canvasHover($event)" ng-init="init()" width="1500" height="800">
+            Use a modern browser!
+        </canvas>
+        <div>
+            <span>zoom: {{zoom}}</span>
+        </div>        
+    </div>
+</body>
+</html>
