@@ -1,11 +1,11 @@
 ﻿"use strict";
-function Canvas(ctx) {
+function Canvas(ctx, $scope) {
     var obj = {
         ctx: null,
 
-        init: function (ctx) {
+        init: function (ctx, $scope) {
             this.ctx = ctx;
-            designerSurface.init(ctx, { x: 50, y: 50 }, 1435, 735, 100);
+            designerSurface.init(ctx, $scope.shapes, { x: 50, y: 50 }, 1435, 735, 100);
 
             //temporary to test offsets
             var shape = [{ x: 0, y: 0 },
@@ -57,7 +57,7 @@ function Canvas(ctx) {
                 this.ctx.moveTo(previousPoint.x, previousPoint.y);
                 var isBorderPoint = false;
                 var isPreviousBorderPoint = false;
-                var q;
+                var q, r;
 
                 for (var i = 1; i < coordinates.length; i++) {
                     var p = coordinates[i];
@@ -117,6 +117,6 @@ function Canvas(ctx) {
             return { isInBounds: true, coordinates: coordinates };
         }
     }
-    obj.init(ctx);
+    obj.init(ctx, $scope);
     return obj;
 }

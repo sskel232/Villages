@@ -12,3 +12,23 @@ span.leftPadding {
 canvas{
     cursor: pointer;
 }
+
+.table-row {
+    display: table-row;
+}
+
+.table-cell {
+    display: table-cell;
+    vertical-align: top;
+}
+
+.table-cell div {
+    padding: 2px 0px;
+}
+
+span.fixedWidthLabel {
+    width:30px;
+    display: inline-block;
+    text-align: right;
+    margin-right:2px;
+}

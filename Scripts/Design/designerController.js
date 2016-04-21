@@ -26,7 +26,9 @@ designerApp.controller('designerController', function ($scope) {
     }
 
     $scope.init = function () {
-        canvas = Canvas(ctx);
+        $scope.shapes = [];
+        $scope.coordinates = [];
+        canvas = Canvas(ctx, $scope);
         horizontalScrollBar = ScrollBar({ x: 50, y: 785 }, 1435, 100, true);
         verticalScrollBar = ScrollBar({ x: 1485, y: 50 }, 735, 100, false);
 
@@ -63,5 +65,22 @@ designerApp.controller('designerController', function ($scope) {
         var loc = GetLoc($event);
         horizontalScrollBar.mouseUp(loc);
         verticalScrollBar.mouseUp(loc);
+    }
+
+    $scope.shapeChange = function (selectedShape) {
+        var selection = JSON.parse(selectedShape);
+        $scope.selectedShape = selection[0];
+        $scope.shapeIndex = selection[1];
+        $scope.coordinates = $scope.selectedShape.coordinates
+    }
+
+    $scope.coordinateChange = function (coordinate, index) {
+        $scope.coordinates[index] = { x: parseFloat(coordinate.x), y: parseFloat(coordinate.y) };
+        if (index === 0)
+            $scope.coordinates[$scope.coordinates.length - 1] = jQuery.extend({}, $scope.coordinates[0]);
+        else if (index + 1 === $scope.coordinates.length)
+            $scope.coordinates[0] = jQuery.extend({}, $scope.coordinates[index]);
+        $scope.shapes[$scope.shapeIndex].coordinates = $scope.coordinates;
+        designerSurface.redraw();
     }
 });

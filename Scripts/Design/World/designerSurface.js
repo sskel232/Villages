@@ -8,7 +8,7 @@
     firstLocation: null,
     isBorderPoint: false,
     landType: null,
-    shapes: [],
+    shapes: null,
     coordinates: [],
     bounds: [],
     plainsColor: '#ccff99',
@@ -20,8 +20,9 @@
     baseZoom: null,
     adjustment: null,
 
-    init: function (ctx, anchor, width, height, zoom) {
+    init: function (ctx, shapes, anchor, width, height, zoom) {
         this.ctx = ctx;
+        this.shapes = shapes;
         this.anchor = anchor;
         this.width = width;
         this.height = height;
@@ -40,7 +41,7 @@
             //close path
 
             if (Math.abs(location.x - this.firstLocation.x) < 10 && Math.abs(location.y - this.firstLocation.y) < 10) {
-                location = this.firstLocation;
+                location = jQuery.extend({}, this.firstLocation);
                 clearPrevious = true;
             }
             else if (this.parent !== null) {
@@ -80,7 +81,7 @@
 
         if (adjustment.x !== 0 || adjustment.y !== 0) {
             for (var i = 0; i < this.shapes.length; i++) {
-                for (var j = 1; j < this.shapes[i].coordinates.length; j++) {
+                for (var j = 0; j < this.shapes[i].coordinates.length; j++) {
                     var point = this.shapes[i].coordinates[j];
                     point.x += adjustment.x;
                     point.y += adjustment.y;
@@ -165,11 +166,12 @@
     },
 
     setZoom: function (zoom) {
+        debugger;
         if (this.zoom !== zoom) {
             var diff = (zoom / this.baseZoom) * (this.baseZoom / this.zoom);
             for (var i = 0; i < this.shapes.length; i++) {
                 var shape = this.shapes[i];
-                for (var j = 1; j < shape.coordinates.length; j++) {
+                for (var j = 0; j < shape.coordinates.length; j++) {
                     var coordinate = shape.coordinates[j];
                     coordinate.x = (coordinate.x - this.adjustment.x) * diff + this.adjustment.x;
                     coordinate.y = (coordinate.y - this.adjustment.y) * diff + this.adjustment.y;

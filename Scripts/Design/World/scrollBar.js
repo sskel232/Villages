@@ -172,14 +172,8 @@ function ScrollBar(anchor, width, zoom, horizontal) {
                     change = newPosition - this.position;
                 }
             }
-
-            var denominator
-            if (this.horizontal)
-                denominator = this.boundsMinMax.maxX - this.boundsMinMax.minX;
-            else
-                denominator = this.boundsMinMax.maxY - this.boundsMinMax.minY;
-
-            var percentChange = change / (denominator);
+            
+            var percentChange = change / (this.maxPosition);
             var worldChange = -1 * this.maxPosition * percentChange;
             for (var i = 0; i < this.moveBar.length; i++) {
                 if (this.horizontal)
@@ -189,9 +183,9 @@ function ScrollBar(anchor, width, zoom, horizontal) {
             }
 
             if(this.horizontal)
-                designerSurface.move({ x: worldChange, y: 0 });
+                designerSurface.move({ x: worldChange * this.zoom / this.baseZoom, y: 0 });
             else
-                designerSurface.move({ x: 0, y: worldChange });
+                designerSurface.move({ x: 0, y: worldChange * this.zoom / this.baseZoom });
             this.position = newPosition;
             this.redraw();
         },
@@ -201,17 +195,13 @@ function ScrollBar(anchor, width, zoom, horizontal) {
                 var worldWidthZoom = (zoom / this.baseZoom) * (this.baseZoom / this.zoom);
                 var moveBarZoom = 1 / worldWidthZoom;
 
-                //this.movebarAnchor move to here then zoom then add back in difference
-
                 if (this.horizontal) {
                     var xDiff = this.moveBar[0].x - this.movebarAnchor;
-
                     this.moveBar[1].x = (this.moveBar[1].x - xDiff) * moveBarZoom + xDiff;
                     this.moveBar[2].x = (this.moveBar[2].x - xDiff) * moveBarZoom + xDiff;
                 }
                 else {
                     var yDiff = this.moveBar[0].y - this.movebarAnchor;
-                    //LOOK HERE!!!!!
                     this.moveBar[2].y = (this.moveBar[2].y - yDiff) * moveBarZoom + yDiff;
                     this.moveBar[3].y = (this.moveBar[3].y - yDiff) * moveBarZoom + yDiff;
                 }

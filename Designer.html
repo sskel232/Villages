@@ -55,12 +55,25 @@
         <input type="button" value="Undo" ng-click="undoClick()" accesskey="z" />
         <span>click: {{clickloc}}</span>
         <span>hover: {{hoverloc}}</span>
-        <canvas ng-click="canvasClick($event)" ng-mousedown="canvasMouseDown($event)" ng-mouseup="canvasMouseUp($event)" ng-mousemove="canvasHover($event)" ng-init="init()" width="1500" height="800">
-            Use a modern browser!
-        </canvas>
+        <div class="table-row">
+            <canvas class="table-cell" ng-click="canvasClick($event)" ng-mousedown="canvasMouseDown($event)" ng-mouseup="canvasMouseUp($event)" ng-mousemove="canvasHover($event)" ng-init="init()" width="1500" height="800">
+                Use a modern browser!
+            </canvas>
+            <div class="table-cell">
+                <div style="overflow-y: scroll; display: block; height: 800px;">
+                    <select ng-model="selectedShape" ng-change="shapeChange(selectedShape)">
+                        <option ng-repeat="shape in shapes" value="{{[shape, shapes.indexOf(shape)]}}">{{shapes.indexOf(shape)}}</option>
+                    </select>
+                    <div ng-repeat="coordinate in coordinates" style="padding-bottom: 5px;">
+                        <div><span class="fixedWidthLabel">x{{coordinates.indexOf(coordinate)}}:</span><input ng-blur="coordinateChange(coordinate, coordinates.indexOf(coordinate))" ng-model="coordinate.x" /></div>
+                        <div><span class="fixedWidthLabel">y{{coordinates.indexOf(coordinate)}}:</span><input ng-blur="coordinateChange(coordinate, coordinates.indexOf(coordinate))" ng-model="coordinate.y" /></div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div>
             <span>zoom: {{zoom}}</span>
-        </div>        
+        </div>
     </div>
 </body>
 </html>
